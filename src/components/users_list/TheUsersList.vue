@@ -3,14 +3,17 @@
 
     <table class="users_list">
       <tr>
-        <th>
-          <div>Имя и фамилия</div>
+        <th @click="sortUsers('name')">
+          <sort-icon :direction="sorting.direction" :enabled="sorting.type === 'name'"/>
+          <span>Имя и фамилия</span>
         </th>
-        <th>
-          <div>Дата регистрации</div>
+        <th @click="sortUsers('registrationDate')">
+          <sort-icon :direction="sorting.direction" :enabled="sorting.type === 'registrationDate'"/>
+          <span>Дата регистрации</span>
         </th>
-        <th>
-          <div>Баллы</div>
+        <th @click="sortUsers('pointsEarned')">
+          <sort-icon :direction="sorting.direction" :enabled="sorting.type === 'pointsEarned'"/>
+          <span>Баллы</span>
         </th>
       </tr>
 
@@ -43,13 +46,18 @@
 
 <script>
   import ThePagination from './ThePagination.vue';
-  import { sort, filter} from "./filters_and_sorting";
+  import SortIcon from './SortIcon.vue';
+  import {filter, sort} from "./filters_and_sorting";
 
   export default {
-    components: {ThePagination},
+    components: {ThePagination, SortIcon},
     props: ['users', 'filters'],
     data() {
       return {
+        sorting: {
+          type: null,
+          direction: null
+        },
         currentPage: 1,
         itemsPerPage: 10,
         filteredCount: 0
@@ -59,7 +67,10 @@
     computed: {
       filteredUsers() {
         const start = (this.currentPage - 1) * this.itemsPerPage;
-        const users = filter(this.users, this.filters);
+        let users = filter(this.users, this.filters);
+        if (this.sorting.direction) {
+          users = sort(users, this.sorting.type, this.sorting.direction === 'asc');
+        }
         this.filteredCount = users.length;
         return users.slice(start, start + this.itemsPerPage);
       }
@@ -67,6 +78,18 @@
     methods: {
       paginate(page) {
         this.currentPage = page;
+      },
+      sortUsers(type) {
+        const directions = ['asc', 'desc', null];
+        if (this.sorting.type === type) {
+          const current = directions.indexOf(this.sorting.direction);
+          const newDirection = directions[current + 1];
+          this.sorting.direction = typeof newDirection === 'undefined' ? directions[0] : newDirection;
+        }
+        else {
+          this.sorting.type = type;
+          this.sorting.direction = directions[0];
+        }
       }
     },
     watch: {
@@ -83,5 +106,9 @@
     text-align: center;
     font-size: 1.5rem;
     font-weight: bold;
+  }
+  .users_list th {
+    user-select: none;
+    cursor: pointer;
   }
 </style>

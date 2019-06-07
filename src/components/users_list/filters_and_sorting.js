@@ -1,3 +1,27 @@
+export function sort(usersList, sortType, isAsc) {
+  const getValue = {
+    pointsEarned(item) {
+      return item.points_earned;
+    },
+    name(item) {
+      return item.name.toLowerCase();
+    },
+    registrationDate(item) {
+      return (new Date(item.registration_date)).getTime();
+    }
+  };
+  return usersList.sort((a, b) => {
+    const valueA = getValue[sortType](a);
+    const valueB = getValue[sortType](b);
+    if (valueA < valueB) {
+      return isAsc ? -1 : 1;
+    } else if (valueA > valueB) {
+      return isAsc ? 1 : -1
+    }
+    return 0;
+  })
+}
+
 export function filterByTextQuery(item, filters) {
   if (!filters.textQuery) {
     return true;
