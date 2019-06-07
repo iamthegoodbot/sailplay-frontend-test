@@ -6,19 +6,22 @@
 
     </div>
     <TheFilter @search="searchClients"/>
+    <TheUsersList :users="users" :filters="filters" v-if="users && filters" />
   </div>
 </template>
 
 <script>
   import TheFilter from '@/components/filters/TheFilter.vue'
+  import TheUsersList from '@/components/users_list/TheUsersList.vue'
   import api from '@/api';
 
   export default {
     name: 'Clients',
-    components: {TheFilter},
+    components: {TheFilter, TheUsersList},
     data() {
       return {
-        users: null
+        users: null,
+        filters: null
       }
     },
     mounted() {
@@ -31,7 +34,7 @@
         });
       },
       searchClients(data) {
-        console.log('searchClients', data);
+        this.filters = data;
       }
     }
   }
