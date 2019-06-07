@@ -17,6 +17,12 @@
       this.$refs.datepicker.value = this.value.toLocaleDateString('en-CA'); // yyyy-mm-dd
       this.$refs.datepicker.min = (new Date(this.minDate)).toLocaleDateString('en-CA'); // yyyy-mm-dd
       this.$refs.datepicker.max = (new Date(this.maxDate)).toLocaleDateString('en-CA'); // yyyy-mm-dd
+      this.$refs.datepicker.addEventListener('change', () => {
+        const val = this.$refs.datepicker.value;
+        if (!isNaN((new Date(val)).getTime())) {
+          this.$emit('input', new Date(val));
+        }
+      });
     },
     watch: {
       value(current) {
