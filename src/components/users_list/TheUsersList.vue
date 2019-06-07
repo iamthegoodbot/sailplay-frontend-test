@@ -72,6 +72,7 @@
           users = sort(users, this.sorting.type, this.sorting.direction === 'asc');
         }
         this.filteredCount = users.length;
+        this.$emit('filtered', this.filteredCount);
         return users.slice(start, start + this.itemsPerPage);
       }
     },

@@ -5,8 +5,12 @@
       <h1>Клиенты</h1>
 
     </div>
-    <TheFilter @search="searchClients"/>
-    <TheUsersList :users="users" :filters="filters" v-if="users && filters" />
+    <TheFilter @search="searchClients" :clients-count="filteredUsersCount"/>
+    <TheUsersList
+            :users="users"
+            :filters="filters"
+            @filtered="onFilteredUsersList"
+            v-if="users && filters" />
   </div>
 </template>
 
@@ -21,6 +25,7 @@
     data() {
       return {
         users: null,
+        filteredUsersCount: null,
         filters: null
       }
     },
@@ -28,6 +33,9 @@
       this.fetchUsers();
     },
     methods: {
+      onFilteredUsersList(count) {
+        this.filteredUsersCount = count
+      },
       fetchUsers() {
         api.fetchUsers().then((data) => {
           this.users = data;

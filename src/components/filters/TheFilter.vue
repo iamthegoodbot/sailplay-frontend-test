@@ -57,7 +57,7 @@
     <div class="filters_footer">
 
       <div class="filters_footer_inner clearfix">
-        <clients-counter count="clientsCount" />
+        <clients-counter :count="clientsCount" />
         <button type="button" class="search_button" @click="search">Поиск</button>
         <button type="button" class="reset_button" @click="reset">Сбросить</button>
       </div>
