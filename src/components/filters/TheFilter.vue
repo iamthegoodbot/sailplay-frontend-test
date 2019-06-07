@@ -104,10 +104,11 @@
         this.setupSliderModels();
         this.setupDatepickers();
         this.textQuery = '';
+        this.search();
       },
       search() {
         const searchData = {
-          textQuery: this.textQuery,
+          textQuery: this.textQuery.toLowerCase(),
           startDate: this.startDate,
           endDate: this.endDate,
           earnedPoints: {
