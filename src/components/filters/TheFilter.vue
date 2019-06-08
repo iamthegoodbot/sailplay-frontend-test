@@ -75,7 +75,7 @@
 
   export default {
     components: {Slider, ClientsCounter, Datepicker},
-    props: ['clientsCount'],
+    props: ['clientsCount', 'filters'],
     data() {
       return {
         textQuery: '',
@@ -95,15 +95,16 @@
         api.fetchSearchLimits().then((data) => {
           this.searchLimit = data.users;
           this.showSliders = true;
-          this.setupSliderModels();
-          this.setupDatepickers();
+          this.setupSliderModels(true);
+          this.setupDatepickers(true);
+          this.setupTextQuery(true);
           this.search();
         })
       },
       reset() {
         this.setupSliderModels();
         this.setupDatepickers();
-        this.textQuery = '';
+        this.setupTextQuery();
         this.search();
       },
       search() {
@@ -122,11 +123,21 @@
         };
         this.$emit('search', searchData);
       },
-      setupDatepickers() {
+      setupTextQuery(isInit) {
+        this.textQuery = '';
+        if (isInit && this.filters.textQuery) {
+          this.textQuery = this.filters.textQuery;
+        }
+      },
+      setupDatepickers(isInit) {
         this.startDate = new Date(this.searchLimit.min_registration_date);
         this.endDate = new Date(this.searchLimit.max_registration_date);
+        if (isInit && this.filters.startDate && this.filters.endDate) {
+          this.startDate = this.filters.startDate;
+          this.endDate = this.filters.endDate;
+        }
       },
-      setupSliderModels() {
+      setupSliderModels(isInit) {
         this.earnedPointsModel = {
           start: this.searchLimit.min_points_earned,
           end: this.searchLimit.max_points_earned,
@@ -138,6 +149,12 @@
           end: this.searchLimit.max_points_spent,
           min: this.searchLimit.min_points_spent,
           max: this.searchLimit.max_points_spent
+        };
+        if (isInit && this.filters.earnedPoints) { // assume spentPoints exist too
+          this.earnedPointsModel.start = this.filters.earnedPoints.start;
+          this.earnedPointsModel.end = this.filters.earnedPoints.end;
+          this.spentPointsModel.start = this.filters.spentPoints.start;
+          this.spentPointsModel.end = this.filters.spentPoints.end;
         }
       }
     }

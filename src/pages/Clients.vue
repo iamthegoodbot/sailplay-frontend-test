@@ -5,7 +5,11 @@
       <h1>Клиенты</h1>
 
     </div>
-    <TheFilter @search="searchClients" :clients-count="filteredUsersCount"/>
+    <TheFilter
+            v-if="users"
+            :filters="filtersFromUrl"
+            @search="searchClients"
+            :clients-count="filteredUsersCount"/>
     <TheUsersList
             :users="users"
             :filters="filters"
@@ -15,9 +19,13 @@
 </template>
 
 <script>
-  import TheFilter from '@/components/filters/TheFilter.vue'
-  import TheUsersList from '@/components/users_list/TheUsersList.vue'
+  import TheFilter from '@/components/filters/TheFilter.vue';
+  import TheUsersList from '@/components/users_list/TheUsersList.vue';
   import api from '@/api';
+  import {
+    serializeFiltersToUrl,
+    deserializeFiltersFromUrl
+  } from '@/components/users_list/url_helper.js';
 
   export default {
     name: 'Clients',
@@ -26,11 +34,13 @@
       return {
         users: null,
         filteredUsersCount: null,
+        filtersFromUrl: null,
         filters: null
       }
     },
     mounted() {
       this.fetchUsers();
+      this.filtersFromUrl = deserializeFiltersFromUrl(this.$route.query);
     },
     methods: {
       onFilteredUsersList(count) {
@@ -42,6 +52,8 @@
         });
       },
       searchClients(data) {
+        const query = serializeFiltersToUrl(data);
+        this.$router.replace({name: 'clients', query});
         this.filters = data;
       }
     }
