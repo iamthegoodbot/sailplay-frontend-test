@@ -20,12 +20,12 @@ export function deserializeFiltersFromUrl(query) {
       startDate: new Date(query.start_date),
       endDate: new Date(query.end_date),
       earnedPoints: {
-        start: query.pt_earned_start,
-        end: query.pt_earned_end
+        start: parseInt(query.pt_earned_start, 10),
+        end: parseInt(query.pt_earned_end, 10)
       },
       spentPoints: {
-        start: query.pt_spent_start,
-        end: query.pt_spent_end
+        start: parseInt(query.pt_spent_start, 10),
+        end: parseInt(query.pt_spent_end, 10)
       }
     };
   }
