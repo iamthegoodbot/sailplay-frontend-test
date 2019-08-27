@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/iamthegoodbot/sailplay-frontend-test/issues"
   },
-  "homepage": "https://github.com/iamthegoodbot/sailplay-frontend-test#readme"
+  "homepage": "https://github.com/iamthegoodbot/sailplay-frontend-test#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-webserver": "^0.9.1"
+  }
 }
