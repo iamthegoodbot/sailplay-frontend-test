@@ -1,0 +1,38 @@
+.filters_list_field_input {
+  display: inline-block;
+}
+
+.date_picker_wrapper {
+  display: inline-block;
+  margin: 0 4px;
+  position: relative;
+  min-width: 100px;
+  width: auto;
+  vertical-align: top;
+
+  .input_simple {
+    line-height: 40px;
+    height: 40px;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 300;
+    background: #dcdcd9;
+    border: none !important;
+    box-shadow: none;
+    border-radius: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: 'Roboto', Arial, sans-serif;
+    outline: none;
+    padding: 0 10px;
+  }
+  .input_simple.from::before {
+    content: " от ";
+    white-space: pre;
+  }
+  .input_simple.to::before {
+    content: " до ";
+    white-space: pre;
+  }
+}
