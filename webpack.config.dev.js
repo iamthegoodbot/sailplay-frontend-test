@@ -8,15 +8,13 @@ const path = require('path');
 const HOST = 'localhost';
 const PORT = 8080;
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '.', dir);
 }
 
 module.exports = {
   mode: 'development',
-  entry: [
-    './src/app.js'
-  ],
+  entry: ['./src/app.js'],
   devServer: {
     clientLogLevel: 'warning',
     hot: true,
@@ -27,68 +25,69 @@ module.exports = {
     open: true,
     overlay: { warnings: false, errors: true },
     publicPath: '/',
-    quiet: true
+    quiet: true,
   },
   module: {
     rules: [
       {
         test: /\.vue$/,
-        use: 'vue-loader'
+        use: 'vue-loader',
       },
       {
         test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          'css-loader'
-        ]
+        use: ['vue-style-loader', 'css-loader'],
       },
       {
         test: /\.less$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'less-loader'
-        ]
+        use: ['vue-style-loader', 'css-loader', 'less-loader'],
       },
       {
         test: /\.js$/,
-        use: 'babel-loader'
+        use: 'babel-loader',
       },
-      {
+    {
         test: /\.(js|vue)$/,
         use: 'eslint-loader',
         enforce: 'pre',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.svg/,
         use: {
           loader: 'svg-url-loader',
-          options: {}
-        }
+          options: {},
+        },
       },
       {
-          test: /\.(jpe?g|png|gif)$/i,
-          loader:"file-loader",
-          options:{
-              name:'[name].[ext]',
-              outputPath:'assets/images/'
-          }
-      }
-    ]
+        test: /\.(jpe?g|png|gif)$/i,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: 'assets/images/',
+        },
+      },
+    ],
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': "jquery'",
+      'window.$': 'jquery',
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
-      inject: true
+      inject: true,
     }),
-    new CopyWebpackPlugin([{
-      from: resolve('static/svg'),
-      to: resolve('dist/static/svg'),
-      toType: 'dir'
-    }])
-  ]
+    new CopyWebpackPlugin([
+      {
+        from: resolve('static/svg'),
+        to: resolve('dist/static/svg'),
+        toType: 'dir',
+      },
+    ]),
+  ],
 };

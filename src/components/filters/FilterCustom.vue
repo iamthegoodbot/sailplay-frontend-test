@@ -57,7 +57,7 @@
         </div>
         <Slider
           :value="sliderValueEarned"
-          @changeSlider="changeSliderEarned"
+          @updateProps="changeSliderEarned"
         />
       </div>
       <div
@@ -70,7 +70,7 @@
         </div>
         <Slider
           :value="sliderValueSpent"
-          @changeSlider="changeSliderSpent"
+          @updateProps="changeSliderSpent"
         />
       </div>
     </div>
@@ -143,10 +143,10 @@ export default {
         end: response.data.users.max_points_earned
       };
       this.sliderValueSpent = {
-        min: response.data.users.min_points_earned,
-        max: response.data.users.max_points_earned,
-        start: response.data.users.min_points_earned,
-        end: response.data.users.max_points_earned,
+        min: response.data.users.min_points_spent,
+        max: response.data.users.max_points_spent,
+        start: response.data.users.min_points_spent,
+        end: response.data.users.max_points_spent,
       };
       this.startDate = new Date(this.min_registartion_date);
       this.startDate.setDate(this.startDate.getDate() + 1);
@@ -193,13 +193,13 @@ export default {
       this.offSlider = !this.offSlider;
     },
     changeSliderEarned (data) {
-      this.sliderValueEarned.start = parseInt(data.start);
-      this.sliderValueEarned.end = parseInt(data.end);
+      this.sliderValueEarned.start = parseInt(data[0]);
+      this.sliderValueEarned.end = parseInt(data[1]);
       this.default = true;
     },
     changeSliderSpent (data) {
-      this.sliderValueSpent.start = parseInt(data.start);
-      this.sliderValueSpent.end = parseInt(data.end);
+      this.sliderValueSpent.start = parseInt(data[0]);
+      this.sliderValueSpent.end = parseInt(data[1]);
       this.default = true;
     },
     searchUsers () {
@@ -235,21 +235,23 @@ export default {
     Slider,
   },
   watch: {
-    '$route.query': {
+    '$route.query.search': {
       handler (newVal) {
-        try {
-          const jsonQuery = JSON.parse(newVal.search);
-          if (typeof jsonQuery === "object") {
-            for (const key in jsonQuery) {
-              const element = jsonQuery[key];
-              this.textSearch += element + " ";
+        if (newVal) {
+          try {
+            const jsonQuery = JSON.parse(newVal);
+            if (typeof jsonQuery === "object") {
+              for (const key in jsonQuery) {
+                const element = jsonQuery[key];
+                this.textSearch += element + " ";
+              }
+            } else {
+              this.textSearch = jsonQuery;
             }
-          } else {
-            this.textSearch = jsonQuery;
+            this.resetOn = true;
+          } catch (error) {
+            console.error(error);
           }
-          this.resetOn = true;
-        } catch (error) {
-          console.error(error);
         }
       },
       immediate: true
