@@ -5,6 +5,7 @@
 Отправка письма происходит через внутренний сервис по HTTP API:
 
 https://email-machine.internal/api/email-gate/{email-domain}/ 
+
 (в рамках тестового задания не нужно делать сам сервис отправки),
 где email-domain может быть:
 - gmail
