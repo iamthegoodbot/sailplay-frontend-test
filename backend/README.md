@@ -23,10 +23,11 @@ https://email-machine.internal/api/email-gate/{email-domain}/
 ```
 
 ### Фильтрация контента.
+
 Если домен получателя:
-    - gmail.com: удаляем все предложения, которые содержат слово `offer`.
-    - yandex.ru: заменяем все картинки текстом ссылки на картинку, т.е. `<img src="https://spam.org/pic1.png"/>` => `https://spam.org/pic1.png`
-    - mail.ru: заменяем у всех изображений расширение файла с gif на png, т.е. `<img src="https://spam.org/pic1.gif" />` => `<img src="https://spam.org/pic1.png" />`
+- gmail.com: удаляем все предложения, которые содержат слово `offer`.
+- yandex.ru: заменяем все картинки текстом ссылки на картинку, т.е. `<img src="https://spam.org/pic1.png"/>` => `https://spam.org/pic1.png`
+- mail.ru: заменяем у всех изображений расширение файла с gif на png, т.е. `<img src="https://spam.org/pic1.gif" />` => `<img src="https://spam.org/pic1.png" />`
 
 Хотим получить:
 1) Единую точку входа для отправки письма.
