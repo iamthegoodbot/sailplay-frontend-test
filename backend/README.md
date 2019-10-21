@@ -7,6 +7,7 @@
 https://email-machine.internal/api/email-gate/{email-domain}/ 
 
 (в рамках тестового задания не нужно делать сам сервис отправки),
+
 где email-domain может быть:
 - gmail
 - yandex
