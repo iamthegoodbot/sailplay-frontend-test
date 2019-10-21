@@ -56,3 +56,6 @@ email = Email('test4@sailplay.ru', 'Hello another mail client! I have an offer f
 email.send()
 >>> {'email': 'test4@sailplay.ru', 'Hello another mail client!'}
 ```
+
+Реализацию задания выложить в репозиторий и предоставить ссылку.
+
