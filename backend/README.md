@@ -15,7 +15,7 @@ https://email-machine.internal/api/email-gate/{email-domain}/
 
 Если домен получателя не входит в список, использовать по умолчанию gmail.
 
-Формат JSON запроса:
+Формат JSON запроса отправки письма через сервис:
 ```
 {
     "email: "test@domain.com",
