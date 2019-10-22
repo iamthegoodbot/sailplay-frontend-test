@@ -12,7 +12,8 @@ https://email-machine.internal/api/email-gate/{email-domain}/
 - gmail
 - yandex
 - mail
-Если домен получателя не входит в список, использовать по умолчанию gmail
+
+Если домен получателя не входит в список, использовать по умолчанию gmail.
 
 Формат JSON запроса:
 ```
